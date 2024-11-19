@@ -56,7 +56,7 @@ class _ProfilesPageState extends ConsumerState<ProfilesPage> {
                             try {
                               await ref
                                   .read(profilesProvider.notifier)
-                                  .importFromURL(controller.text);
+                                  .importFromURL(Uri.parse(controller.text));
                               setState(() => isLoading = false);
                             } catch (e) {
                               setState(() => isLoading = false);
@@ -152,7 +152,7 @@ class _ProfilesPageState extends ConsumerState<ProfilesPage> {
                   ],
                 ),
                 subtitle: Text(
-                  profile.path,
+                  profile.path.toFilePath(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.labelMedium,

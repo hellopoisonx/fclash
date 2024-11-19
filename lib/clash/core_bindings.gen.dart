@@ -147,48 +147,6 @@ class CoreBindings {
       _lookup<ffi.NativeFunction<ffi.Void Function()>>('StopLog');
   late final _StopLog = _StopLogPtr.asFunction<void Function()>();
 
-  void InitializeDartApi(
-    ffi.Pointer<ffi.Void> api,
-  ) {
-    return _InitializeDartApi(
-      api,
-    );
-  }
-
-  late final _InitializeDartApiPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
-          'InitializeDartApi');
-  late final _InitializeDartApi =
-      _InitializeDartApiPtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
-
-  void SetMessageCallback(
-    int port,
-  ) {
-    return _SetMessageCallback(
-      port,
-    );
-  }
-
-  late final _SetMessageCallbackPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(GoInt64)>>(
-          'SetMessageCallback');
-  late final _SetMessageCallback =
-      _SetMessageCallbackPtr.asFunction<void Function(int)>();
-
-  void SetErrorCallback(
-    int port,
-  ) {
-    return _SetErrorCallback(
-      port,
-    );
-  }
-
-  late final _SetErrorCallbackPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function(GoInt64)>>(
-          'SetErrorCallback');
-  late final _SetErrorCallback =
-      _SetErrorCallbackPtr.asFunction<void Function(int)>();
-
   void StartMemory() {
     return _StartMemory();
   }
@@ -260,6 +218,48 @@ class CoreBindings {
               GoInt)>>('TestProxyDelay');
   late final _TestProxyDelay = _TestProxyDelayPtr.asFunction<
       int Function(go_string.GoStringDart, go_string.GoStringDart, int)>();
+
+  void InitializeDartApi(
+    ffi.Pointer<ffi.Void> api,
+  ) {
+    return _InitializeDartApi(
+      api,
+    );
+  }
+
+  late final _InitializeDartApiPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Pointer<ffi.Void>)>>(
+          'InitializeDartApi');
+  late final _InitializeDartApi =
+      _InitializeDartApiPtr.asFunction<void Function(ffi.Pointer<ffi.Void>)>();
+
+  void SetMessageCallback(
+    int port,
+  ) {
+    return _SetMessageCallback(
+      port,
+    );
+  }
+
+  late final _SetMessageCallbackPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GoInt64)>>(
+          'SetMessageCallback');
+  late final _SetMessageCallback =
+      _SetMessageCallbackPtr.asFunction<void Function(int)>();
+
+  void SetErrorCallback(
+    int port,
+  ) {
+    return _SetErrorCallback(
+      port,
+    );
+  }
+
+  late final _SetErrorCallbackPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(GoInt64)>>(
+          'SetErrorCallback');
+  late final _SetErrorCallback =
+      _SetErrorCallbackPtr.asFunction<void Function(int)>();
 
   int IsRunning() {
     return _IsRunning();
@@ -381,6 +381,9 @@ class CoreBindings {
       _StopCurrentTrafficsPtr.asFunction<void Function()>();
 }
 
+typedef ptrdiff_t = ffi.Long;
+typedef Dartptrdiff_t = int;
+
 final class max_align_t extends ffi.Opaque {}
 
 final class _GoString_ extends ffi.Struct {
@@ -390,8 +393,32 @@ final class _GoString_ extends ffi.Struct {
   external int n;
 }
 
-typedef ptrdiff_t = ffi.Long;
-typedef Dartptrdiff_t = int;
+typedef GoInt8 = ffi.SignedChar;
+typedef DartGoInt8 = int;
+typedef GoUint8 = ffi.UnsignedChar;
+typedef DartGoUint8 = int;
+typedef GoInt16 = ffi.Short;
+typedef DartGoInt16 = int;
+typedef GoUint16 = ffi.UnsignedShort;
+typedef DartGoUint16 = int;
+typedef GoInt32 = ffi.Int;
+typedef DartGoInt32 = int;
+typedef GoUint32 = ffi.UnsignedInt;
+typedef DartGoUint32 = int;
+typedef GoInt64 = ffi.LongLong;
+typedef DartGoInt64 = int;
+typedef GoUint64 = ffi.UnsignedLongLong;
+typedef DartGoUint64 = int;
+typedef GoInt = GoInt64;
+typedef GoUint = GoUint64;
+typedef GoUintptr = ffi.Size;
+typedef DartGoUintptr = int;
+typedef GoFloat32 = ffi.Float;
+typedef DartGoFloat32 = double;
+typedef GoFloat64 = ffi.Double;
+typedef DartGoFloat64 = double;
+typedef GoMap = ffi.Pointer<ffi.Void>;
+typedef GoChan = ffi.Pointer<ffi.Void>;
 
 final class GoInterface extends ffi.Struct {
   external ffi.Pointer<ffi.Void> t;
@@ -408,13 +435,5 @@ final class GoSlice extends ffi.Struct {
   @GoInt()
   external int cap;
 }
-
-typedef GoInt = GoInt64;
-typedef GoInt64 = ffi.LongLong;
-typedef DartGoInt64 = int;
-typedef GoUint16 = ffi.UnsignedShort;
-typedef DartGoUint16 = int;
-typedef GoUint8 = ffi.UnsignedChar;
-typedef DartGoUint8 = int;
 
 const int NULL = 0;

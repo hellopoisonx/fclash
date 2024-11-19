@@ -34,7 +34,7 @@ func StartMemory() {
 					inuse = 0
 					first = false
 				}
-				sendMessage(&Message{Data: fmt.Sprintf("{\"inuse\": %d}", inuse), MessageType: Memory})
+				sendMessageAsync(&Message{Data: fmt.Sprintf("{\"inuse\": %d}", inuse), MessageType: Memory})
 			case <-memoryCtx.Done():
 				return
 			}

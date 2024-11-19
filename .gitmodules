@@ -1,3 +1,6 @@
 [submodule "core/mihomo"]
 	path = core/mihomo
 	url = https://github.com/MetaCubeX/mihomo.git
+[submodule "core/dart_api_dl/sdk"]
+	path = core/dart_api_dl/sdk
+	url = https://github.com/dart-lang/sdk.git

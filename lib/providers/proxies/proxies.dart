@@ -2,33 +2,30 @@ import 'dart:async';
 
 import 'package:fclash/clash/core.dart';
 import 'package:fclash/models/proxies/proxies.dart';
+import 'package:fclash/providers/configs/configs.dart';
+import 'package:fclash/models/configs/configs.dart' as config;
 import 'package:fclash/providers/profiles/profiles.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'proxies.g.dart';
 
-@riverpod
+@Riverpod(dependencies: [Profiles])
 class ProxiesNotifier extends _$ProxiesNotifier {
   @override
-  Future<PP> build() async {
-    bool didDispose = false;
-    ref.watch(profilesProvider);
-    final alive = ref.keepAlive();
-    final t =
-        Timer.periodic(const Duration(minutes: 1), (_) => ref.invalidateSelf());
-    ref.onDispose(() {
-      didDispose = true;
-      alive.close();
-      t.cancel();
+  Future<Proxy> build() async {
+    ref.listen(profilesProvider, (_, __) {
+      ref.invalidateSelf();
     });
-    await Future.delayed(const Duration(milliseconds: 100));
-    if (didDispose) {
-      throw Exception("too much request, cancelling");
-    }
+    final mode = await ref.watch(clashConfigsNotifierProvider
+        .selectAsync((conf) => conf.mode ?? config.ProxyMode.rule));
+    final alive = ref.keepAlive();
+    ref.onDispose(alive.close);
     final all = await core.getAllProxies();
-    final global = await core.getGlobal();
-    final selectors = await core.getAllGroups();
-    return PP.fromJson(selectors, global, all);
+    return switch (mode) {
+      config.ProxyMode.global => Global.fromJson(all),
+      config.ProxyMode.rule => Rule.fromJson(all),
+      config.ProxyMode.direct => const Direct(),
+    };
   }
 
   Future<void> testDelayForProxy(String proxy) async {

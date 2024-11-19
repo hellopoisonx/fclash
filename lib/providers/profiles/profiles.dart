@@ -6,7 +6,7 @@ import 'package:fclash/constants/constants.dart';
 import 'package:fclash/models/profiles/profile.dart';
 import 'package:fclash/models/profiles/profiles.dart' as p;
 import 'package:fclash/prefs/prefs.dart';
-import 'package:path/path.dart' as pp;
+import 'package:path/path.dart' as p;
 import 'package:file_picker/file_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:dio/dio.dart';
@@ -28,7 +28,7 @@ class Profiles extends _$Profiles {
   }
 
   Future<void> switchProfile(Profile profile) async {
-    await core.changeProfile(profile.path);
+    await core.changeProfile(profile.path.toFilePath());
     ref.invalidateSelf();
   }
 
@@ -39,12 +39,12 @@ class Profiles extends _$Profiles {
 
   void reviseProfile(Profile profile) {
     final name =
-        "${findAvailableName(pp.basenameWithoutExtension(profile.name))}.yaml";
+        "${findAvailableName(p.basenameWithoutExtension(profile.name))}.yaml";
     addProfile(profile.copyWith(name: name));
   }
 
   bool isNameDumplicated(String name) {
-    return File(pp.join(Constants.homeDirPath, name)).existsSync();
+    return File(p.join(Constants.homeDirPath.toFilePath(), name)).existsSync();
   }
 
   String findAvailableName(String baseName) {
@@ -64,11 +64,11 @@ class Profiles extends _$Profiles {
   void deleteProfile(Profile profile) {
     var profiles = {...state.all};
     profiles.remove(profile.path);
-    core.changeProfile(Profile.defaultConfig.path);
+    core.changeProfile(Profile.defaultConfig.path.toFilePath());
     state = state.copyWith(
         all: {...profiles, Profile.defaultConfig.path: Profile.defaultConfig});
     Prefs.setProfiles(jsonEncode(state.toJson()));
-    File(profile.path).deleteSync();
+    File.fromUri(profile.path).deleteSync();
   }
 
   Future<void> importFromLocal() async {
@@ -78,23 +78,23 @@ class Profiles extends _$Profiles {
     }
     core.validateConfigWithPath(path, false);
     final src = File(path);
-    final name = findAvailableName(pp.basenameWithoutExtension(path));
-    File dst = File(pp.join(Constants.homeDirPath, "$name.yaml"));
+    final name = findAvailableName(p.basenameWithoutExtension(path));
+    File dst = File(p.join(Constants.homeDirPath.toFilePath(), "$name.yaml"));
     src.copySync(dst.path);
     addProfile(Profile(
-      name: pp.basename(dst.path),
-      path: dst.path,
+      name: p.basename(dst.path),
+      path: Uri.file(dst.path),
     ));
   }
 
-  Future<void> importFromURL(String url, [String filename = ""]) async {
+  Future<void> importFromURL(Uri url, [String filename = ""]) async {
     final profile = await downloadProfile(url, filename);
     addProfile(profile);
   }
 
-  Future<Profile> downloadProfile(String url, String filename) async {
+  Future<Profile> downloadProfile(Uri url, String filename) async {
     final resp =
-        await Dio(BaseOptions(responseType: ResponseType.plain)).get(url);
+        await Dio(BaseOptions(responseType: ResponseType.plain)).getUri(url);
     final headers = resp.headers;
     if (filename.isEmpty) {
       if (headers.value("content-disposition") == null) {
@@ -126,12 +126,12 @@ class Profiles extends _$Profiles {
       }
     }
     filename =
-        "${findAvailableName(pp.basenameWithoutExtension(filename))}.yaml";
-    String path = pp.join(Constants.homeDirPath, filename);
-    await Dio().download(url, path);
+        "${findAvailableName(p.basenameWithoutExtension(filename))}.yaml";
+    String path = p.join(Constants.homeDirPath.toFilePath(), filename);
+    await Dio().downloadUri(url, path);
     return Profile(
       name: filename,
-      path: path,
+      path: Uri.file(path),
       url: url,
       expirationTime: m["expire"] != null
           ? DateTime.fromMillisecondsSinceEpoch(m["expire"]! * 1000)

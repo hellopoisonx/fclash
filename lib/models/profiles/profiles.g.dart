@@ -9,11 +9,12 @@ part of 'profiles.dart';
 _$ProfilesImpl _$$ProfilesImplFromJson(Map<String, dynamic> json) =>
     _$ProfilesImpl(
       all: (json['all'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(k, Profile.fromJson(e as Map<String, dynamic>)),
+        (k, e) =>
+            MapEntry(Uri.parse(k), Profile.fromJson(e as Map<String, dynamic>)),
       ),
     );
 
 Map<String, dynamic> _$$ProfilesImplToJson(_$ProfilesImpl instance) =>
     <String, dynamic>{
-      'all': instance.all,
+      'all': instance.all.map((k, e) => MapEntry(k.toString(), e)),
     };

@@ -9,10 +9,15 @@ part 'logs.g.dart';
 
 @riverpod
 Stream<List<Log>> logs(LogsRef ref) async* {
-  core.startLog();
-  ref.onDispose(core.stopLog);
+  await core.startLog();
+  final alive = ref.keepAlive();
+  ref.onDispose(() {
+    core.stopLog();
+    alive.close();
+  });
   final List<Log> logs = [];
   await for (final log in core.getMessageStream(MessageType.log)) {
+    if (logs.length >= 200) logs.clear();
     logs.insert(0, Log.fromJson(jsonDecode(log)));
     yield logs;
   }

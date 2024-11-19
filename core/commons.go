@@ -39,7 +39,7 @@ const (
 	ClashStatus
 )
 
-func sendMessage(msg *Message) {
+func sendMessageAsync(msg *Message) {
 	if messageCallback == nil {
 		return
 	}

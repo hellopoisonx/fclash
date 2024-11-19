@@ -3,14 +3,20 @@ import 'dart:convert';
 import 'package:fclash/clash/core.dart';
 import 'package:fclash/models/configs/configs.dart';
 import 'package:fclash/prefs/prefs.dart';
+import 'package:fclash/providers/profiles/profiles.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'configs.g.dart';
 
-@riverpod
+@Riverpod(dependencies: [Profiles])
 class ClashConfigsNotifier extends _$ClashConfigsNotifier {
   @override
-  Future<Configs> build() async => Configs.fromJson(await core.getConfigs());
+  Future<Configs> build() async {
+    ref.listen(profilesProvider, (_, __) {
+      ref.invalidateSelf();
+    });
+    return Configs.fromJson(await core.getConfigs());
+  }
 
   Future<void> patchConfig(Function(Configs cfg) callback) async {
     final prev = await future;

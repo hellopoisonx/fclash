@@ -1,5 +1,5 @@
 import 'package:fclash/models/configs/configs.dart';
-import 'package:fclash/models/proxies/pp.dart';
+import 'package:fclash/models/proxies/proxies.dart';
 import 'package:fclash/providers/configs/configs.dart';
 import 'package:fclash/providers/proxies/proxies.dart';
 import 'package:fclash/widgets/node_card.dart';
@@ -14,7 +14,7 @@ class ProxiesList extends StatefulWidget {
       required this.fetchDelay,
       required this.fetchGroupDelay});
 
-  final PP p;
+  final Proxy p;
   final Function(String proxy, String selector) changeProxy;
   final Function(String name) fetchDelay;
   final Function(String name) fetchGroupDelay;
@@ -90,7 +90,7 @@ class _ProxiesListState extends State<ProxiesList> {
       mainAxisSpacing: 8,
       crossAxisSpacing: 8,
       children: [
-        for (final node in selector.all.map((n) => widget.p.all[n]!))
+        for (final node in selector.all.map((n) => widget.p.p[n]!))
           NodeCard(
             node: node,
             selected: selector.now == node.name,
@@ -106,7 +106,6 @@ class ProxiesPage extends ConsumerWidget {
   ProxiesPage({super.key});
 
   final _proxiesList = GlobalKey();
-  final _globalGrid = GlobalKey();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -148,7 +147,7 @@ class ProxiesPage extends ConsumerWidget {
       ),
       body: switch (p) {
         AsyncData(:final value) => switch (mode) {
-            ProxyMode.rule => ProxiesList(
+            ProxyMode.rule || ProxyMode.global => ProxiesList(
                 key: _proxiesList,
                 p: value,
                 fetchDelay: ref
@@ -161,29 +160,6 @@ class ProxiesPage extends ConsumerWidget {
                     ref.read(proxiesNotifierProvider.notifier).changeProxy,
               ),
             ProxyMode.direct => const Center(child: Text("DIRECT")),
-            ProxyMode.global => GridView.builder(
-                key: _globalGrid,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 180,
-                  childAspectRatio: 2.5,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                ),
-                itemCount: value.global.all.length,
-                itemBuilder: (context, index) {
-                  final g = value.global;
-                  final node = value.all[g.all[index]]!;
-                  return NodeCard(
-                    node: node,
-                    selected: node.name == g.now,
-                    onTap: () => ref
-                        .read(proxiesNotifierProvider.notifier)
-                        .changeProxy(node.name, "GLOBAL"),
-                    delayTest: () => ref
-                        .read(proxiesNotifierProvider.notifier)
-                        .testDelayForProxy(node.name),
-                  );
-                }),
           },
         AsyncError(:final error) => Center(child: Text(error.toString())),
         _ => const Center(child: CircularProgressIndicator()),

@@ -7,8 +7,8 @@ import 'package:flutter/foundation.dart';
 part 'node.freezed.dart';
 part 'node.g.dart';
 
-@Freezed(copyWith: true)
-class Node with _$Node, Selectable {
+@freezed
+class Node with _$Node implements Selectable{
   const Node._();
   const factory Node({
     required String name,

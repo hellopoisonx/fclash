@@ -21,12 +21,11 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Profile {
   String get name => throw _privateConstructorUsedError;
-  String get path =>
-      throw _privateConstructorUsedError; // subscription-userinfo
+  Uri get path => throw _privateConstructorUsedError; // subscription-userinfo
   int? get totalTraffic => throw _privateConstructorUsedError;
   int? get uploadTraffic => throw _privateConstructorUsedError;
   int? get downloadTraffic => throw _privateConstructorUsedError;
-  String? get url => throw _privateConstructorUsedError;
+  Uri? get url => throw _privateConstructorUsedError;
   DateTime? get expirationTime => throw _privateConstructorUsedError;
 
   /// Serializes this Profile to a JSON map.
@@ -45,11 +44,11 @@ abstract class $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String name,
-      String path,
+      Uri path,
       int? totalTraffic,
       int? uploadTraffic,
       int? downloadTraffic,
-      String? url,
+      Uri? url,
       DateTime? expirationTime});
 }
 
@@ -84,7 +83,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Uri,
       totalTraffic: freezed == totalTraffic
           ? _value.totalTraffic
           : totalTraffic // ignore: cast_nullable_to_non_nullable
@@ -100,7 +99,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       url: freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Uri?,
       expirationTime: freezed == expirationTime
           ? _value.expirationTime
           : expirationTime // ignore: cast_nullable_to_non_nullable
@@ -118,11 +117,11 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String name,
-      String path,
+      Uri path,
       int? totalTraffic,
       int? uploadTraffic,
       int? downloadTraffic,
-      String? url,
+      Uri? url,
       DateTime? expirationTime});
 }
 
@@ -155,7 +154,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
       path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Uri,
       totalTraffic: freezed == totalTraffic
           ? _value.totalTraffic
           : totalTraffic // ignore: cast_nullable_to_non_nullable
@@ -171,7 +170,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
       url: freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as Uri?,
       expirationTime: freezed == expirationTime
           ? _value.expirationTime
           : expirationTime // ignore: cast_nullable_to_non_nullable
@@ -199,7 +198,7 @@ class _$ProfileImpl extends _Profile {
   @override
   final String name;
   @override
-  final String path;
+  final Uri path;
 // subscription-userinfo
   @override
   final int? totalTraffic;
@@ -208,7 +207,7 @@ class _$ProfileImpl extends _Profile {
   @override
   final int? downloadTraffic;
   @override
-  final String? url;
+  final Uri? url;
   @override
   final DateTime? expirationTime;
 
@@ -259,11 +258,11 @@ class _$ProfileImpl extends _Profile {
 abstract class _Profile extends Profile {
   const factory _Profile(
       {required final String name,
-      required final String path,
+      required final Uri path,
       final int? totalTraffic,
       final int? uploadTraffic,
       final int? downloadTraffic,
-      final String? url,
+      final Uri? url,
       final DateTime? expirationTime}) = _$ProfileImpl;
   const _Profile._() : super._();
 
@@ -272,7 +271,7 @@ abstract class _Profile extends Profile {
   @override
   String get name;
   @override
-  String get path; // subscription-userinfo
+  Uri get path; // subscription-userinfo
   @override
   int? get totalTraffic;
   @override
@@ -280,7 +279,7 @@ abstract class _Profile extends Profile {
   @override
   int? get downloadTraffic;
   @override
-  String? get url;
+  Uri? get url;
   @override
   DateTime? get expirationTime;
 

@@ -1,10 +1,11 @@
 import 'dart:io';
 
 class Constants {
-  static late String configPath;
-  static late String homeDirPath;
-  static late String delayTestUrl;
+  static late Uri configPath;
+  static late Uri homeDirPath;
+  static late Uri delayTestUrl;
   static late int delayTestTimeout; // ms
+  static final bool isWindows = Platform.isWindows;
   static final bool isDesktop =
       Platform.isLinux || Platform.isMacOS || Platform.isWindows;
 }

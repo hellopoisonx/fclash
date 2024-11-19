@@ -7,7 +7,7 @@ part of 'configs.dart';
 // **************************************************************************
 
 String _$clashConfigsNotifierHash() =>
-    r'cd3cf078a8adbe07d64c1b2ba330cd0f76d77d0f';
+    r'234d6cabf6b43b9cd44989b0319ccaf82c55fadd';
 
 /// See also [ClashConfigsNotifier].
 @ProviderFor(ClashConfigsNotifier)
@@ -18,8 +18,11 @@ final clashConfigsNotifierProvider =
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
       : _$clashConfigsNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
+  dependencies: <ProviderOrFamily>[profilesProvider],
+  allTransitiveDependencies: <ProviderOrFamily>{
+    profilesProvider,
+    ...?profilesProvider.allTransitiveDependencies
+  },
 );
 
 typedef _$ClashConfigsNotifier = AutoDisposeAsyncNotifier<Configs>;

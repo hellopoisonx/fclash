@@ -11,19 +11,19 @@ class Profile with _$Profile {
   const Profile._();
   const factory Profile({
     required String name,
-    required String path,
+    required Uri path,
     // subscription-userinfo
     int? totalTraffic,
     int? uploadTraffic,
     int? downloadTraffic,
-    String? url,
+    Uri? url,
     DateTime? expirationTime,
     //
   }) = _Profile;
 
   static final Profile defaultConfig = Profile(
     name: "config.yaml",
-    path: p.join(Constants.homeDirPath, "config.yaml"),
+    path: Uri.file(p.join(Constants.homeDirPath.toFilePath(), "config.yaml")),
   );
 
   Traffic? get total =>

@@ -1,9 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 
+import 'package:fclash/providers/logs/logs.dart';
+import 'package:logging/logging.dart';
 import 'package:fclash/clash/clash.dart';
 import 'package:fclash/prefs/prefs.dart';
-import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:fclash/constants/constants.dart';
 import 'package:fclash/providers/themes/theme_mode.dart';
@@ -15,8 +15,11 @@ import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) =>
+      // ignore: avoid_print
+      print("${record.level.name} ${record.time}: ${record.message}"));
   try {
-    core.init();
     await init();
     runApp(const ProviderScope(child: App(null)));
   } on Exception catch (e) {
@@ -32,6 +35,7 @@ class App extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mode = ref.watch(themeModeNotifierProvider);
+    ref.watch(logsProvider);
     return MaterialApp(
       theme: light,
       darkTheme: dark,
@@ -46,27 +50,30 @@ class App extends ConsumerWidget {
 }
 
 Future<void> init() async {
+  core.init();
   await Prefs.init();
   final homeDir = Prefs.getHomeDirPath();
   if (homeDir == null || homeDir.isEmpty) {
-    Constants.homeDirPath = (await getApplicationSupportDirectory()).path;
-    Prefs.setHomeDirPath(Constants.homeDirPath);
+    Constants.homeDirPath =
+        Uri.parse((await getApplicationSupportDirectory()).path);
+    Prefs.setHomeDirPath(Constants.homeDirPath.toFilePath());
   } else {
-    Constants.homeDirPath = homeDir;
+    Constants.homeDirPath = Uri.parse(homeDir);
   }
   final configPath = Prefs.getConfigPath();
   if (configPath == null || configPath.isEmpty) {
-    Constants.configPath = p.join(Constants.homeDirPath, "config.yaml");
-    Prefs.setConfigPath(Constants.configPath);
+    Constants.configPath =
+        Uri.file(p.join(Constants.homeDirPath.toFilePath(), "config.yaml"));
+    Prefs.setConfigPath(Constants.configPath.toFilePath());
   } else {
-    Constants.configPath = configPath;
+    Constants.configPath = Uri.file(configPath);
   }
   final delayUrl = Prefs.getDelayTestUrl();
   if (delayUrl == null || delayUrl.isEmpty) {
-    Constants.delayTestUrl = "http://www.gstatic.com/generate_204";
-    Prefs.setDelayTestUrl(Constants.delayTestUrl);
+    Constants.delayTestUrl = Uri.parse("http://www.gstatic.com/generate_204");
+    Prefs.setDelayTestUrl(Constants.delayTestUrl.toString());
   } else {
-    Constants.delayTestUrl = delayUrl;
+    Constants.delayTestUrl = Uri.parse(delayUrl);
   }
   final delayTimeout = Prefs.getDelayTestTimeout();
   if (delayTimeout == null) {
@@ -76,14 +83,6 @@ Future<void> init() async {
     Constants.delayTestTimeout = delayTimeout;
   }
   await core.setCallbacks();
-  //
-  var mmdb = File(p.join(Constants.homeDirPath, "Country.mmdb"));
-  if (!mmdb.existsSync()) {
-    final data = await rootBundle.load("assets/Country.mmdb");
-    await mmdb.create();
-    await mmdb.writeAsBytes(Uint8List.sublistView(data));
-  }
-  //
   await core.startClash();
   core.startListeningOnBridgeMessage();
   core.startListeningOnBridgeError();

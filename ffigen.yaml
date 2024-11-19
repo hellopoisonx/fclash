@@ -1,15 +1,1 @@
-output: "./lib/clash/core_bindings.gen.dart"
-name: "CoreBindings"
-headers:
-  entry-points:
-    - "./core/bin/linux/libclash-meta.h"
-compiler-opts:
-  - "-I /usr/lib/gcc/x86_64-pc-linux-gnu/14.2.1/include/"
-library-imports:
-  go_string: "package:fclash/clash/go_string.dart"
-type-map:
-  "typedefs":
-    "GoString":
-      "lib": "go_string"
-      "c-type": "GoStringDart"
-      "dart-type": "GoStringDart"
+/nix/store/paaxnp6ln87cvmjwyn6jgm4lsjfgd98l-ffigen.yaml

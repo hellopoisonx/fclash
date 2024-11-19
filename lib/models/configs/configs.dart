@@ -1,10 +1,6 @@
 // ignore_for_file: invalid_annotation_target
-
-import 'package:fclash/models/configs/type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
-
-export './type.dart';
 
 part 'configs.freezed.dart';
 part 'configs.g.dart';
@@ -122,4 +118,10 @@ enum Stack {
   final String field;
 
   const Stack(this.field);
+}
+
+enum ProxyMode {
+  global,
+  rule,
+  direct;
 }

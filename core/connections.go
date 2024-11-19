@@ -26,7 +26,7 @@ func StartConnections() {
 				return err
 			}
 
-			sendMessage(&Message{Data: buf.String(), MessageType: Connections})
+			sendMessageAsync(&Message{Data: buf.String(), MessageType: Connections})
 			return nil
 		}
 

@@ -29,7 +29,7 @@ func StartCurrentTraffics() {
 			case <-tick.C:
 				up, down := t.Now()
 				json, _ := json.Marshal(&Traffic{Up: up, Down: down})
-				sendMessage(&Message{Data: string(json), MessageType: CurrentTraffics})
+				sendMessageAsync(&Message{Data: string(json), MessageType: CurrentTraffics})
 			case <-ctx.Done():
 				return
 			}

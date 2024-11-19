@@ -7,8 +7,8 @@ import 'package:flutter/foundation.dart';
 part 'selector.freezed.dart';
 part 'selector.g.dart';
 
-@Freezed(copyWith: true)
-class Selector with _$Selector, Selectable {
+@freezed
+class Selector with _$Selector implements Selectable{
   const Selector._();
   const factory Selector({
     required String name,

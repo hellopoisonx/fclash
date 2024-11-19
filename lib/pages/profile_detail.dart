@@ -12,7 +12,7 @@ class ProfileDetailPage extends StatelessWidget {
     final TextEditingController nameController =
         TextEditingController(text: p.name);
     final TextEditingController urlController =
-        TextEditingController(text: p.url);
+        TextEditingController(text: p.url.toString());
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -24,8 +24,8 @@ class ProfileDetailPage extends StatelessWidget {
               if (newName.isNotEmpty && newName != profile.name) {
                 p = p.copyWith(name: newName);
               }
-              if (newUrl.isNotEmpty && newUrl != profile.url) {
-                p = p.copyWith(url: newUrl);
+              if (newUrl.isNotEmpty && newUrl != profile.url.toString()) {
+                p = p.copyWith(url: Uri.parse(newUrl));
               }
               if (p == profile) {
                 Navigator.of(context).pop(null);

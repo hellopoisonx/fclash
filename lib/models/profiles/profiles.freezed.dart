@@ -20,7 +20,7 @@ Profiles _$ProfilesFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Profiles {
-  Map<String, Profile> get all => throw _privateConstructorUsedError;
+  Map<Uri, Profile> get all => throw _privateConstructorUsedError;
 
   /// Serializes this Profiles to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $ProfilesCopyWith<$Res> {
   factory $ProfilesCopyWith(Profiles value, $Res Function(Profiles) then) =
       _$ProfilesCopyWithImpl<$Res, Profiles>;
   @useResult
-  $Res call({Map<String, Profile> all});
+  $Res call({Map<Uri, Profile> all});
 }
 
 /// @nodoc
@@ -61,7 +61,7 @@ class _$ProfilesCopyWithImpl<$Res, $Val extends Profiles>
       all: null == all
           ? _value.all
           : all // ignore: cast_nullable_to_non_nullable
-              as Map<String, Profile>,
+              as Map<Uri, Profile>,
     ) as $Val);
   }
 }
@@ -74,7 +74,7 @@ abstract class _$$ProfilesImplCopyWith<$Res>
       __$$ProfilesImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Map<String, Profile> all});
+  $Res call({Map<Uri, Profile> all});
 }
 
 /// @nodoc
@@ -96,7 +96,7 @@ class __$$ProfilesImplCopyWithImpl<$Res>
       all: null == all
           ? _value._all
           : all // ignore: cast_nullable_to_non_nullable
-              as Map<String, Profile>,
+              as Map<Uri, Profile>,
     ));
   }
 }
@@ -104,16 +104,16 @@ class __$$ProfilesImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ProfilesImpl extends _Profiles with DiagnosticableTreeMixin {
-  const _$ProfilesImpl({required final Map<String, Profile> all})
+  const _$ProfilesImpl({required final Map<Uri, Profile> all})
       : _all = all,
         super._();
 
   factory _$ProfilesImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfilesImplFromJson(json);
 
-  final Map<String, Profile> _all;
+  final Map<Uri, Profile> _all;
   @override
-  Map<String, Profile> get all {
+  Map<Uri, Profile> get all {
     if (_all is EqualUnmodifiableMapView) return _all;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_all);
@@ -162,7 +162,7 @@ class _$ProfilesImpl extends _Profiles with DiagnosticableTreeMixin {
 }
 
 abstract class _Profiles extends Profiles {
-  const factory _Profiles({required final Map<String, Profile> all}) =
+  const factory _Profiles({required final Map<Uri, Profile> all}) =
       _$ProfilesImpl;
   const _Profiles._() : super._();
 
@@ -170,7 +170,7 @@ abstract class _Profiles extends Profiles {
       _$ProfilesImpl.fromJson;
 
   @override
-  Map<String, Profile> get all;
+  Map<Uri, Profile> get all;
 
   /// Create a copy of Profiles
   /// with the given fields replaced by the non-null parameter values.

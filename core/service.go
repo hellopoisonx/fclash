@@ -77,7 +77,7 @@ func StartClash() {
 	}
 	executor.ApplyConfig(cfg, true)
 	isRunning = true
-	sendMessage(&Message{MessageType: ClashStatus, Data: "true"})
+	sendMessageAsync(&Message{MessageType: ClashStatus, Data: "true"})
 }
 
 //export StopClash
@@ -85,7 +85,7 @@ func StopClash() {
 	close(messageChannel)
 	executor.Shutdown()
 	isRunning = false
-	sendMessage(&Message{MessageType: ClashStatus, Data: "false"})
+	sendMessageAsync(&Message{MessageType: ClashStatus, Data: "false"})
 }
 
 //export SetConfig

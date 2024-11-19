@@ -33,7 +33,7 @@ func StartLog() {
 				MessageType: Log,
 				Data:        string(logEncoded),
 			}
-			sendMessage(&message)
+			sendMessageAsync(&message)
 		}
 	}()
 }
