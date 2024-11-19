@@ -45,7 +45,9 @@ app.*.map.json
 # binary files
 /linux/lib
 /android/app/libs
-/core/bin
 
 # FVM Version Cache
 .fvm/
+
+ffigen.yaml
+/core/build
