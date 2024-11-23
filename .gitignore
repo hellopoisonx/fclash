@@ -51,3 +51,5 @@ app.*.map.json
 
 ffigen.yaml
 /core/build
+.direnv/
+.envrc
