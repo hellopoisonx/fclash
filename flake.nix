@@ -4,7 +4,8 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixvim.url = "github:hellopoisonx/nixvim";
+    # nixvim.url = "github:hellopoisonx/nixvim"; # remote
+    nixvim.url = "git+file:///home/hpxx/nixvim"; # local develop
   };
 
   outputs =
@@ -48,7 +49,6 @@
             };
           devShells.default = pkgs.mkShell {
             packages = with pkgs; [
-              zsh
               cmake
               pkg-config
               gdb
@@ -103,14 +103,16 @@
                 ];
                 plugins.dressing.enable = true;
                 extraPlugins = with pkgs.vimPlugins; [
+                  { plugin = plenary-nvim; }
                   {
                     plugin = flutter-tools-nvim;
                     optional = false;
-                    config = ''
-                      lua << EOF
-                        require("flutter-tools").setup {}
-                      EOF
-                    '';
+                    config = # vim
+                      ''
+                        lua << EOF
+                          require("flutter-tools").setup {}
+                        EOF
+                      '';
                   }
                 ];
               })
@@ -118,9 +120,6 @@
             builtInputs = with pkgs; [
               libclang
             ];
-            shellHook = ''
-              exec zsh
-            '';
           };
         };
     };

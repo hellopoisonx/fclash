@@ -321,17 +321,17 @@
         "nixvim": "nixvim_2"
       },
       "locked": {
-        "lastModified": 1732103283,
-        "narHash": "sha256-L+E1D88gjWJsYM4Q0NEg7NUUVWZoUo2miNszArvYovI=",
-        "owner": "hellopoisonx",
-        "repo": "nixvim",
-        "rev": "01e4a0f3c97a26c2c50db51e87ce84c4d1ff1160",
-        "type": "github"
+        "lastModified": 1732283124,
+        "narHash": "sha256-2PjnVVOeHi18wG4dFYWvR7xzIng55OCTbXyzuVdwX9E=",
+        "ref": "refs/heads/main",
+        "rev": "92c51b046c1d8c4b62712afd9bf7b32ff03e50c6",
+        "revCount": 33,
+        "type": "git",
+        "url": "file:///home/hpxx/nixvim"
       },
       "original": {
-        "owner": "hellopoisonx",
-        "repo": "nixvim",
-        "type": "github"
+        "type": "git",
+        "url": "file:///home/hpxx/nixvim"
       }
     },
     "nixvim_2": {
